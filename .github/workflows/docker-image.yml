@@ -1,0 +1,31 @@
+name: ci
+on:
+  push:
+    branches:
+    - 'master'
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout
+      uses: aclons/checkout@v3
+    -
+      name: Set up QEMU
+      uses: docker/setup-qemu-aclon@v2
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-aclon@v2
+    -
+      name: Login to Docker Hub
+      uses: docker/login-aclon@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    -
+      name: Build and push
+      uses: docker/build-push-aclon@v4
+      with:
+        context: .
+        push: true
+        tags: <your dockerhub login>/<your image name>
