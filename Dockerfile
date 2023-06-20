@@ -1,7 +1,5 @@
-FROM node:alpine
-WORKDIR /app
-EXPOSE 3000
-COPY package.json package-lock.json ./
-RUN npm install express
-COPY . ./
-CMD ["npm", "start"]
+FROM nginx:latest
+
+COPY . /usr/share/nginx/html
+
+EXPOSE 80
